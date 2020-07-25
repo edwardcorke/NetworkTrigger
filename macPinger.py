@@ -1,5 +1,11 @@
 import getmac
 import time
+from emailSender import sendEmail
+from decouple import config
+
+sender_email = config("SENDER_EMAIL")
+password = config("SENDER_EMAIL_PASSWORD")
+receiver_email = "eddycorke@gmail.com"
 
 def mapNetwork():
     for x in range(255):
@@ -12,6 +18,7 @@ def detectDevice(ipAddress, macAddress):
         if mac == macAddress:
             msg = "Device (" + ipAddress + ") has joined the network"
             print(msg)
+            sendEmail(sender_email, password, receiver_email, msg)
             return
         else:
             time.sleep(1)
